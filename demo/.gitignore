@@ -26,6 +26,17 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
+.idea/
+*.iml
+
+# Gradle
+.gradle/
+build/
+
+# OS
+.DS_Store
+Thumbs.db
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
