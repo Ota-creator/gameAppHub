@@ -2,10 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Game;
 import com.example.demo.repository.GameRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.demo.service.GameService;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,9 +13,14 @@ import java.util.Optional;
 public class GameController {
 
     private final GameRepository gameRepository;
+    private final GameService gameService;
 
-    public GameController(GameRepository gameRepository) {
+    public GameController(
+            GameRepository gameRepository,
+            GameService gameService) {
+
         this.gameRepository = gameRepository;
+        this.gameService = gameService;
     }
 
     @GetMapping
@@ -31,5 +34,18 @@ public class GameController {
         Optional<Game> game = gameRepository.findById(id);
 
         return game.orElse(null);
+    }
+
+    @PostMapping
+    public Game createGame(@RequestBody Game game) {
+        return gameRepository.save(game);
+    }
+
+    @PutMapping("/{id}")
+    public Game update(
+            @PathVariable Long id,
+            @RequestBody Game game) {
+
+        return gameService.update(id, game);
     }
 }
